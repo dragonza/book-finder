@@ -7,9 +7,12 @@ export default class InputText extends Component {
   };
 
   handleOnChange = e => {
+    const val = e.target.value;
     this.setState({
-      text: e.target.value,
+      text: val,
     });
+    const { onSave } = this.props;
+    onSave(val)
   };
 
   handleBlur = e => {

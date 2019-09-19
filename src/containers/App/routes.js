@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import Layout from '../../components/Layout';
 
 import { configureStore } from '../../store/configure-store';
-import App from '../HomePage/App';
+import Home from '../HomePage/Home';
 
 export const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
@@ -20,7 +20,7 @@ export default function Routes() {
       <ConnectedRouter history={history}>
         <Layout>
           <Switch>
-            <Route exact path="/" component={App} />
+            <Route exact path="/" component={Home} />
             <Route component={() => <div>404 Not found </div>} />
           </Switch>
         </Layout>
