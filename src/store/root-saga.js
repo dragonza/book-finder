@@ -1,8 +1,8 @@
-import { spawn } from 'redux-saga/effects';
-import authSaga from '../containers/Auth/auth-saga';
-import searchSaga from '../containers/HomePage/home-saga'
+import { spawn } from "redux-saga/effects";
+import searchSaga from "../containers/HomePage/home-saga";
+import bookSaga from "../containers/BookList/books-saga";
 
 export default function* rootSaga() {
-  yield spawn(authSaga);
   yield spawn(searchSaga);
+  yield spawn(bookSaga);
 }

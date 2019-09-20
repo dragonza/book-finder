@@ -1,5 +1,4 @@
 import { Map, List } from 'immutable';
-import invariant from './invariant';
 // import {isNumber} from "./is";
 
 function pathToArray(path) {
@@ -29,7 +28,6 @@ export function create(src, path, value) {
 
 export function update(src, path, newVal) {
   const pathArr = pathToArray(path);
-  // const subPathArr = pathToArray(subPath);
   if (!Map.isMap(src.getIn(pathArr))) {
     return src.setIn(pathArr, newVal);
   }

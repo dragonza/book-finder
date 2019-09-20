@@ -1,5 +1,4 @@
 
-import { fromJS } from 'immutable';
 import { UPDATE_DATA } from '../../store/data-action';
 import { INPUT_CHANGE, UPDATE_SEARCH_TERM } from "./home-constants";
 
@@ -14,7 +13,6 @@ export function inputChange(term) {
 
 
 export function updateSearchTerm(term) {
-  console.log('term', term);
   return UPDATE_DATA({
     _path: `${basePath}.searchTerm`,
     _value: term,

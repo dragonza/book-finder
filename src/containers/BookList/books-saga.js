@@ -1,20 +1,25 @@
-import { takeLatest, put, call } from 'react-redux/effects'
+import { takeLatest, put, call } from 'redux-saga/effects'
 import { GET_BOOKS_REQUEST } from "./books-constant";
-import { getBooksLoading } from "./books-actions";
+import { getBooksLoading, getBooksSuccess, getBooksFailed } from "./books-actions";
 import axios from 'axios'
-import { API_KEY } from '../../config/key'
+import { normalizeBooks } from "../../utils/normalizr";
 
 const url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
 function* handleGetBooks(action) {
   try {
-    const { searchTerm, dataActionType } = action;
+    const { searchTerm } = action;
+    console.log('searchTerm saga', searchTerm);
     yield put(getBooksLoading(true));
     const { data } = yield call(axios, {
-      url: `${url}${searchTerm}&key=${API_KEY}`,
+      url: `${url}${searchTerm}`,
     });
+    const {
+      entities: { books },
+    } = normalizeBooks(data.items);
+    yield put(getBooksSuccess({ dataMap: books, isFetching: false, error: null }))
   } catch (e) {
-
+    yield put(getBooksFailed({ error: true, isFetching: false, dataMap: {} }))
   }
 }
 

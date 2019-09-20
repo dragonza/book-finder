@@ -7,7 +7,8 @@ export default function dataReducer(state = fromJS(initialState), action) {
   let { type } = action;
   const dataActionConstList = Object.keys(dataActionConst);
 
-  for (const dataType of dataActionConstList) {
+  // eslint-disable-next-line
+  for (let dataType of dataActionConstList) {
     const i = type.includes(dataType);
     if (i) {
       type = dataType.replace('_DATA', '').toLowerCase();
@@ -15,7 +16,6 @@ export default function dataReducer(state = fromJS(initialState), action) {
         state,
         action.meta._path,
         action.payload,
-        action.meta._subPath,
       );
     }
   }

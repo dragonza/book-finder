@@ -5,6 +5,7 @@ import InputText from "../../components/InputText";
 import { inputChange } from "./home-action";
 import Button  from '../../components/Button'
 import { getBooks } from "../BookList/books-actions";
+import BookList from "../BookList/BookList";
 
 class Home extends React.Component {
   state = {
@@ -13,31 +14,48 @@ class Home extends React.Component {
 
   handleSearch = () => {
     const { searchTerm } = this.state;
+    if (!searchTerm.length) return;
     const { getBooks } = this.props;
     getBooks(searchTerm)
   };
 
-  handleSubmit = text => {
+  handleInputChange = text => {
     const { inputChange } = this.props;
+
     this.setState({
       searchTerm: text
     });
     inputChange(text);
   };
 
+  handleClearText = () => {
+    this.setState({
+      searchTerm: ''
+    });
+  };
+
   render() {
-    const { searchTerm } = this.props;
+    const { searchTerm } = this.state;
     return (
-      <div className="App">
-        <h1>Find you favorite books here!</h1>
-        <InputText text={searchTerm} onSave={this.handleSubmit} />
-        <Button text="Search" onButtonClick={this.handleSearch} />
+      <div className="app">
+        <div className="app__name">
+          <h1>Find you favorite books here!</h1>
+        </div>
+        <div className="app__search">
+          <InputText
+            onRemove={this.handleClearText}
+            placeholder="type author, subject, book name..."
+            className="app__input" text={searchTerm} onChange={this.handleInputChange} onSave={this.handleSearch}/>
+          <Button text="Search" onButtonClick={this.handleSearch} />
+        </div>
+
+        <BookList />
       </div>
     );
   }
 }
-const mapStateToProps = () => {};
+
 export default connect(
-  mapStateToProps,
+  null,
   { inputChange, getBooks }
 )(Home);

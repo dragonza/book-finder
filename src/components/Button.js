@@ -11,7 +11,7 @@ class Button extends Component {
 
   render() {
     const { text } = this.props;
-    return <button onSubmit={this.handleOnSubmit} className="button">{text}</button>;
+    return <button onClick={this.handleOnSubmit} className="button">{text}</button>;
   }
 }
 

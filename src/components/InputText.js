@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
 export default class InputText extends Component {
-  state = {
-    text: this.props.text || '', // eslint-disable-line
-  };
-
   handleOnChange = e => {
     const val = e.target.value;
-    this.setState({
-      text: val,
-    });
-    const { onSave } = this.props;
-    onSave(val)
+
+    const { onChange } = this.props;
+    onChange(val);
   };
 
   handleBlur = e => {
-    const { onSave } = this.props;
-    onSave(e.target.value.trim());
+    const { onChange } = this.props;
+    onChange(e.target.value.trim());
   };
 
   handleSubmit = e => {
@@ -29,16 +24,24 @@ export default class InputText extends Component {
     }
   };
 
-  renderComponent = (props, state) => {
+  handleRemoveClick = () => {
+    const { onRemove } = this.props;
+    onRemove();
+  };
+
+  renderComponent = (props) => {
+    const classNames = classnames("input-text", props.className);
     return (
-      <div className="input-text">
+      <div className={classNames}>
+        {props.text && <div className="close" onClick={this.handleRemoveClick} />}
         <input
+          placeholder={props.placeholder}
           type="text"
           autoFocus // eslint-disable-line
           onChange={this.handleOnChange}
           onBlur={this.handleBlur}
           onKeyDown={this.handleSubmit}
-          value={state.text}
+          value={props.text}
         />
       </div>
     );
@@ -51,5 +54,7 @@ export default class InputText extends Component {
 
 InputText.propTypes = {
   onSave: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired
 };

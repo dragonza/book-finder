@@ -1,20 +1,44 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React from "react";
 
-function mapStateToProps(state) {
-  return {};
-}
-
-class BookItem extends Component {
-  render() {
-    return (
-      <div>
-        BookItem
+function BookItem(props) {
+  const { book } = props;
+  const volumeInfo = book.get("volumeInfo");
+  return (
+    <div className="book">
+      <h3 className="book__title">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={volumeInfo.get("previewLink")}
+          className="book__link"
+        >
+          {volumeInfo.get("title")}
+        </a>
+      </h3>
+      <div className="book__info">
+        <div className="book__image">
+          <img
+            src={volumeInfo.getIn(["imageLinks", "thumbnail"])}
+            alt="book__image"
+          />
+        </div>
+        <div className="book__content">
+          <div className="book__description">
+            <span className="book__label">Description</span>
+            <span>{volumeInfo.get("description") || 'None'}</span>
+          </div>
+          <div className="book_published">
+            <span className="book__label">Published</span>
+            <span>{volumeInfo.get("publishedDate")}</span>
+          </div>
+          <div className="book_publisher">
+            <span className="book__label">Publisher</span>
+            <span>{volumeInfo.get("publisher") || 'None'}</span>
+          </div>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default connect(
-  mapStateToProps,
-)(BookItem);
+export default BookItem;
