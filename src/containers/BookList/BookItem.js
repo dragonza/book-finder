@@ -17,10 +17,12 @@ function BookItem(props) {
       </h3>
       <div className="book__info">
         <div className="book__image">
-          <img
-            src={volumeInfo.getIn(["imageLinks", "thumbnail"])}
-            alt="book__image"
-          />
+          {volumeInfo.getIn(["imageLinks", "thumbnail"]) ?
+            <img
+              src={volumeInfo.getIn(["imageLinks", "thumbnail"])}
+              alt="book__image"
+            /> : <div>No image available</div>
+          }
         </div>
         <div className="book__content">
           <div className="book__description">
